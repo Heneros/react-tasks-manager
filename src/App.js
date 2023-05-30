@@ -1,10 +1,14 @@
 import React from "react";
+import Form from "./components/Form";
+import { Container } from "@mui/material";
 
 function App() {
   return (
-    <div className="App">
-  Hello World
-    </div>
+    <>
+      <Container>
+        <Form />
+      </Container>
+    </>
   );
 }
 
