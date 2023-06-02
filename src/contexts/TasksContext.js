@@ -15,11 +15,12 @@ export const TasksProvider = ({ children }) => {
 
 
     function addTask({ name, description }) {
-        setTasks(prevTask => {
-            if (prevTask.find(task => task.name === name)) {
-                return prevTask;
+        setTasks(prevTasks => {
+            if (prevTasks.find(task => task.name === name)) {
+                return prevTasks;
             }
-            return [...prevTask, { id: uuidV4(), name, description }]
+            const newTask = { id: uuidV4(), name, description };
+            return [...prevTasks, newTask];
         });
     }
 

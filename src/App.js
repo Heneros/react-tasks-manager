@@ -3,7 +3,6 @@ import Form from "./components/Form";
 import { Container } from "@mui/material";
 
 function App() {
-  // const [tasks]
   return (
     <>
       <Container>
