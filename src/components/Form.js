@@ -1,4 +1,4 @@
-import { Button, FormControl, FormGroup, FormHelperText, Input, TextField } from '@mui/material'
+import { Box, Button, FormControl, FormGroup, FormHelperText, Input, TextField } from '@mui/material'
 import React, { useRef } from 'react';
 import { useTasks } from '../contexts/TasksContext';
 
@@ -37,15 +37,17 @@ export default function Form() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <FormControl >
-                    <Input type="text" inputRef={nameRef} placeholder="Name" />
-                    <TextField type="text" inputRef={descriptionRef} placeholder="Description" />
-                    <Button type="submit">
-                        Submit
-                    </Button>
-                </FormControl>
-            </form>
+            <Box sx={{ mt: 15 }}>
+                <form onSubmit={handleSubmit} >
+                    <FormControl >
+                        <Input type="text" inputRef={nameRef} placeholder="Name" />
+                        <TextField type="text" inputRef={descriptionRef} placeholder="Description" />
+                        <Button type="submit">
+                            Submit
+                        </Button>
+                    </FormControl>
+                </form>
+            </Box>
         </>
     )
 }
