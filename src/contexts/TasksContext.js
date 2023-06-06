@@ -11,7 +11,7 @@ export function useTasks() {
 
 export const TasksProvider = ({ children }) => {
     const [tasks, setTasks] = useLocalStorage("tasks", []);
-
+    const [filter, setFilter] = useLocalStorage("filter", 'all');
 
 
     function addTask({ name, description }) {
@@ -19,13 +19,35 @@ export const TasksProvider = ({ children }) => {
             if (prevTasks.find(task => task.name === name)) {
                 return prevTasks;
             }
-            const newTask = { id: uuidV4(), name, description };
+            const newTask = {
+                id: uuidV4(),
+                name,
+                description,
+                completed: false,
+                all: filter === 'all' || filter === 'completed',
+                progress: filter === 'all' || filter === 'progress',
+            };
             return [...prevTasks, newTask];
         });
     }
 
+    function toggleTaskCompletion(taskId) {
+        setTasks(prevTasks => {
+            return prevTasks.map(task => {
+                if (task.id === taskId) {
+                    return { ...task, completed: !task.completed }
+                }
+                return task;
+            })
+        })
+    }
+
     return (
-        <TasksContext.Provider value={{ tasks, addTask }}>
+        <TasksContext.Provider value={{
+            tasks,
+            addTask,
+            toggleTaskCompletion
+        }}>
             {children}
         </TasksContext.Provider>
     )
