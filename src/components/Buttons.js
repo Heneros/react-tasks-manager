@@ -8,9 +8,17 @@ export default function Buttons() {
     const filteredTasks = tasks.filter(task => {
         if (filter === 'all') {
             return true;
+        } else if (filter === 'completed') {
+            return task.status === 'completed';
+        } else if (filter === 'progress') {
+            return task.status === 'progress';
         }
     })
     return (
-        <div></div>
+        <div>
+            <button onClick={() => setFilter('all')}>All</button>
+            <button onClick={() => setFilter('progress')}>Progress</button>
+            <button onClick={() => setFilter('progress')}>Progress</button>
+        </div>
     )
 }
