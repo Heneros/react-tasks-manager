@@ -7,6 +7,8 @@ export default function Tasks({ name, description }) {
                 <h5>{name} </h5>
                 <p>{description} </p>
             </div>
+            <button >Delete</button>
+            <button >Edit</button>
         </div>
     )
 }

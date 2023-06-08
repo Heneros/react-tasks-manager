@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, FormGroup, FormHelperText, Input, TextField } from '@mui/material'
 import React, { useRef } from 'react';
 import { useTasks } from '../contexts/TasksContext';
-
+import { addTask } from '../redux/reducer';
 
 
 export default function Form() {
@@ -9,22 +9,19 @@ export default function Form() {
     const descriptionRef = useRef();
     const { tasks, addTask } = useTasks();
 
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     const name = nameRef.current.value;
-    //     const description = descriptionRef.current.value;
-    //     addTask({ name, description });
-    //     nameRef.current.value = '';
-    //     descriptionRef.current.value = '';
-    // }
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     addTask({
-    //         name: nameRef.current.value,
-    //         description: descriptionRef.current.value,
-    //     })
-    //     console.log(123);
-    // }
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            addTaskLocal: (obj) => dispatch(addTask(obj))
+        }
+    }
+
+    const add = () =>{
+        if(nameRef === ""&& descriptionRef === "" ){
+            alert("Empty string");
+        }else{
+            
+        }
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
