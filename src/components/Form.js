@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { useTasks } from '../contexts/TasksContext';
 import { addTask } from '../redux/reducer';
 import { useDispatch } from 'react-redux';
-
+import { v4 as uuidV4 } from 'uuid';
 
 export default function Form() {
     const nameRef = useRef();
@@ -18,12 +18,14 @@ export default function Form() {
         } else {
             dispatch(
                 addTask({
+                    id: uuidV4(),
                     name: nameRef.current.value,
                     description: descriptionRef.current.value,
                 })
             )
             nameRef.current.value = "";
             descriptionRef.current.value = "";
+            window.location.reload();
         }
     }
 
