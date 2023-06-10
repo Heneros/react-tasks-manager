@@ -2,34 +2,34 @@ import { Box, Button, FormControl, FormGroup, FormHelperText, Input, TextField }
 import React, { useRef } from 'react';
 import { useTasks } from '../contexts/TasksContext';
 import { addTask } from '../redux/reducer';
+import { useDispatch } from 'react-redux';
 
 
 export default function Form() {
     const nameRef = useRef();
     const descriptionRef = useRef();
-    const { tasks, addTask } = useTasks();
+    const dispatch = useDispatch();
 
-    const mapDispatchToProps = (dispatch) => {
-        return {
-            addTaskLocal: (obj) => dispatch(addTask(obj))
-        }
-    }
 
-    const add = () =>{
-        if(nameRef === ""&& descriptionRef === "" ){
+    const add = () => {
+
+        if (nameRef.current.value === "" || descriptionRef.current.value === "") {
             alert("Empty string");
-        }else{
-            
+        } else {
+            dispatch(
+                addTask({
+                    name: nameRef.current.value,
+                    description: descriptionRef.current.value,
+                })
+            )
+            nameRef.current.value = "";
+            descriptionRef.current.value = "";
         }
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        addTask({
-            name: nameRef.current.value,
-            description: descriptionRef.current.value,
-        });
-        console.log(123);
+        add();
     }
 
     return (
@@ -43,6 +43,7 @@ export default function Form() {
                             Submit
                         </Button>
                     </FormControl>
+                    <span></span>
                 </form>
             </Box>
         </>

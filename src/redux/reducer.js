@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [];
+const initialState = JSON.parse(localStorage.getItem("tasks")) || [];
+
 
 
 const addTodoReducer = createSlice({
     name: "tasks",
     initialState,
-    reducer: {
+    reducers: {
         addTask: (state, action) => {
             state.push(action.payload);
             localStorage.setItem("tasks", JSON.stringify(state));

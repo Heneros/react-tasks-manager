@@ -31,16 +31,6 @@ export const TasksProvider = ({ children }) => {
         });
     }
 
-    // function toggleTaskCompletion(taskId) {
-    //     setTasks(prevTasks => {
-    //         return prevTasks.map(task => {
-    //             if (task.id === taskId) {
-    //                 return { ...task, completed: !task.completed }
-    //             }
-    //             return task;
-    //         })
-    //     })
-    // }
 
     return (
         <TasksContext.Provider value={{
