@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import { reducer } from './reducer';
-import { reducer as addTodoReducer } from "./reducer";
+import { reducer as reducerTasks } from "./reducer";
 
 
 
 const store = configureStore({
-    reducer: addTodoReducer
+    reducer: reducerTasks
 });
 
 export default store;

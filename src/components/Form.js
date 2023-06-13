@@ -4,23 +4,29 @@ import { useTasks } from '../contexts/TasksContext';
 import { addTask } from '../redux/reducer';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidV4 } from 'uuid';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function Form() {
     const nameRef = useRef();
     const descriptionRef = useRef();
     const dispatch = useDispatch();
 
+    const [filter, setFilter] = useLocalStorage("filter", 'all');
+
 
     const add = () => {
-
         if (nameRef.current.value === "" || descriptionRef.current.value === "") {
             alert("Empty string");
         } else {
             dispatch(
                 addTask({
+
                     id: uuidV4(),
                     name: nameRef.current.value,
                     description: descriptionRef.current.value,
+                    completed: false,
+                    all: filter === 'all' || filter === 'completed',
+                    progress: filter === 'all' || filter === 'progress',
                 })
             )
             nameRef.current.value = "";
