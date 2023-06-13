@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
 
 
 const navItems = ["Home", "Faq", "Contact Us"];
@@ -58,11 +59,9 @@ export default function Header() {
                         Tasks Manager
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' }, justifyContent: 'flex-end' }}>
-                        {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
-                                {item}
-                            </Button>
-                        ))}
+              
+                        <Link to={'/'} >Home</Link>
+                        <Link to={'/faq'} >Faq</Link>
                     </Box>
                 </Toolbar>
             </AppBar>
