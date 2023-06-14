@@ -20,7 +20,6 @@ export default function Form() {
         } else {
             dispatch(
                 addTask({
-
                     id: uuidV4(),
                     name: nameRef.current.value,
                     description: descriptionRef.current.value,

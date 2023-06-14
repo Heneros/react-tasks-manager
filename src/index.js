@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { TasksProvider } from './contexts/TasksContext';
 import { Provider } from 'react-redux';
-import store from './redux/store';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 
+
+import store from './redux/store';
+import { TasksProvider } from './contexts/TasksContext';
 import Faq from './pages/Faq';
 import Layout from './pages/Layout';
 import Homepage from './pages/Homepage';

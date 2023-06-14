@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { editTask } from "../redux/reducer";
-
+import { useTasks } from '../contexts/TasksContext';
 
 export default function Tasks({ id, name, description }) {
+    // const { changeStatusTask } = useTasks();
+
     const [isEditing, setIsEditing] = useState(false);
     const dispatch = useDispatch();
     const [taskName, setTaskName] = useState(name);
@@ -29,12 +31,11 @@ export default function Tasks({ id, name, description }) {
         setIsEditing(false);
         dispatch(
             editTask({
-                id: id, 
+                id: id,
                 name: taskName,
                 description: taskDescription
             })
         );
-
 
         const tasksFromLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
         const updatedTasks = tasksFromLocalStorage.map(task => {
@@ -48,12 +49,35 @@ export default function Tasks({ id, name, description }) {
             return task;
         });
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        window.location.reload();
     };
+
 
     const cancelEdit = () => {
         setIsEditing(false);
         setTaskName(name);
         setTaskDescription(description);
+    };
+
+    // function moveToCompleted() {
+    //     changeStatusTask();
+    // }
+
+
+    // const handleMoveToCompleted = (id) => {
+
+    //     changeStatusTask(id);
+    // };
+
+    function changeStatusTask() {
+        const tasksStatus = JSON.parse(localStorage.getItem('tasks'));
+        const newIndex = tasksStatus.findIndex(task =>  id);
+
+        console.log(newIndex);
+    }
+
+    const handleMoveToCompleted = (id) => {
+        changeStatusTask(id);
     };
 
     return (
@@ -81,6 +105,8 @@ export default function Tasks({ id, name, description }) {
                         <p>{description}</p>
                         <button onClick={handleEdit}>Edit</button>
                         <button onClick={handleRemove}>Delete</button>
+                        <button onClick={() => handleMoveToCompleted(id)}>Move to Completed</button>
+
                     </div>
                 )}
             </div>

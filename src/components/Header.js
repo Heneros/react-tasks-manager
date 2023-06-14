@@ -6,9 +6,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -32,12 +30,8 @@ export default function Header() {
             </Typography>
             <Divider />
             <List>
-                {navItems.map((item) => (
-                    <ListItem key={item}>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item} />
-                        </ListItemButton>                    </ListItem>
-                ))}
+                <Link to={'/'} >Home</Link>
+                <Link to={'/faq'} >Faq</Link>
             </List>
         </Box >
     );
@@ -59,7 +53,6 @@ export default function Header() {
                         Tasks Manager
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' }, justifyContent: 'flex-end' }}>
-              
                         <Link to={'/'} >Home</Link>
                         <Link to={'/faq'} >Faq</Link>
                     </Box>

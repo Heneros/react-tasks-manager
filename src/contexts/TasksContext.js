@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -32,11 +32,20 @@ export const TasksProvider = ({ children }) => {
     }
 
 
+    const [status, setEditStatus] = useState();
+
+    // function changeStatusTask(id) {
+    //     const tasksStatus = JSON.parse(localStorage.getItem('tasks'));
+    //     const newIndex = tasksStatus.findIndex(task => task.id === task.id);
+    //     console.log(newIndex);
+    // }
+
+
     return (
         <TasksContext.Provider value={{
             tasks,
             addTask,
-            // toggleTaskCompletion
+            // changeStatusTask
         }}>
             {children}
         </TasksContext.Provider>
