@@ -10,6 +10,8 @@ export default function Form() {
     const nameRef = useRef();
     const descriptionRef = useRef();
     const dispatch = useDispatch();
+    const { tasks } = useTasks();
+
 
     const [filter, setFilter] = useLocalStorage("filter", 'all');
 
@@ -18,21 +20,33 @@ export default function Form() {
         if (nameRef.current.value === "" || descriptionRef.current.value === "") {
             alert("Empty string");
         } else {
-            dispatch(
-                addTask({
-                    id: uuidV4(),
-                    name: nameRef.current.value,
-                    description: descriptionRef.current.value,
-                    completed: false,
-                    all: filter === 'all' || filter === 'completed',
-                    progress: filter === 'all' || filter === 'progress',
-                })
-            )
+            const id = Date.now()
+            const intger = String(id);
+            const newTask = {
+                id: Date.now(),
+                name: nameRef.current.value,
+                description: descriptionRef.current.value,
+                completed: false,
+                all: filter === 'all' || filter === 'completed',
+                progress: filter === 'all' || filter === 'progress',
+            };
+
+            const tasksFromLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
+            const existingTask = tasksFromLocalStorage.find(task => task.id === newTask.id);
+            if (existingTask) {
+                alert("Task with the same ID already exists.");
+                return;
+            }
+
+            dispatch(addTask(newTask));
             nameRef.current.value = "";
             descriptionRef.current.value = "";
-            window.location.reload();
+
+            const updatedTasks = [...tasksFromLocalStorage, newTask];
+            localStorage.setItem("tasks", JSON.stringify(updatedTasks));
         }
-    }
+        window.location.reload();
+    };
 
     function handleSubmit(e) {
         e.preventDefault();

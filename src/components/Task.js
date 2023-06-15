@@ -4,7 +4,9 @@ import { editTask } from "../redux/reducer";
 import { useTasks } from '../contexts/TasksContext';
 
 export default function Tasks({ id, name, description }) {
-    // const { changeStatusTask } = useTasks();
+
+    const { tasks } = useTasks();
+
 
     const [isEditing, setIsEditing] = useState(false);
     const dispatch = useDispatch();
@@ -59,31 +61,33 @@ export default function Tasks({ id, name, description }) {
         setTaskDescription(description);
     };
 
-    // function moveToCompleted() {
-    //     changeStatusTask();
-    // }
+    const handleMoveToCompleted = () => {
+        dispatch(
+            editTask({
+                id: id,
+                name: name,
+                description: description,
+                completed: true
+            })
+        );
 
-
-    // const handleMoveToCompleted = (id) => {
-
-    //     changeStatusTask(id);
-    // };
-
-    function changeStatusTask() {
-        const tasksStatus = JSON.parse(localStorage.getItem('tasks'));
-        const newIndex = tasksStatus.findIndex(task =>  id);
-
-        console.log(newIndex);
-    }
-
-    const handleMoveToCompleted = (id) => {
-        changeStatusTask(id);
+        const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks')) || [];
+        const updatedTasks = tasksFromLocalStorage.map(task => {
+            if (task.id === id) {
+                return {
+                    ...task,
+                    completed: true
+                };
+            }
+            return task;
+        });
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
     };
 
     return (
-
         <>
-            <div className="item-task">
+            <div className="item-task" >
+
                 {isEditing ? (
                     <div className="edit-form">
                         <input
@@ -100,17 +104,15 @@ export default function Tasks({ id, name, description }) {
                         <button onClick={cancelEdit}>Cancel</button>
                     </div>
                 ) : (
-                    <div className="text">
+                    <div className="text" >
                         <h5>{name}</h5>
                         <p>{description}</p>
                         <button onClick={handleEdit}>Edit</button>
                         <button onClick={handleRemove}>Delete</button>
-                        <button onClick={() => handleMoveToCompleted(id)}>Move to Completed</button>
-
+                        <button onClick={handleMoveToCompleted}>Move to Completed</button>
                     </div>
                 )}
             </div>
         </>
-    )
-
+    );
 }
