@@ -24,7 +24,8 @@ const reducerTasks = createSlice({
                 state[taskIndex] = { id, name, description };
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
-        }
+        },
+        
 
 
     },

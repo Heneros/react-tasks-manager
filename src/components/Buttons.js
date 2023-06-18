@@ -16,8 +16,12 @@ export default function Buttons() {
         }
     })
     const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
+  
+    const indexStatus = tasksFromLocalStorage.filter(task => task.completed === true);
 
+    console.log(indexStatus);
     return (
+
         <div>
             <button onClick={() => setFilter('all')}>All</button>
             <button onClick={() => setFilter('completed')}>Completed</button>
@@ -32,10 +36,6 @@ export default function Buttons() {
                 ) : (
                     <p>No tasks been added.</p>
                 )}
-                {tasksFromLocalStorage && filter === 'completed' && filteredTasks.filter(task => task.status === 'completed').length === 0 && (
-                    <p>No completed tasks found.</p>
-                )}
-
             </div>
         </div>
     )

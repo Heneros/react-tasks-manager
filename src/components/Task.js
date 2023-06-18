@@ -62,28 +62,14 @@ export default function Tasks({ id, name, description }) {
     };
 
     const handleMoveToCompleted = () => {
-        dispatch(
-            editTask({
-                id: id,
-                name: name,
-                description: description,
-                completed: true
-            })
-        );
-
-        const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks')) || [];
-        const updatedTasks = tasksFromLocalStorage.map(task => {
-            if (task.id === id) {
-                return {
-                    ...task,
-                    completed: true
-                };
-            }
-            return task;
-        });
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+        const arrayTasks = JSON.parse(localStorage.getItem("tasks"));
+        const indexTask = arrayTasks.findIndex(task => task.name === name || task.description === description);
+        if (indexTask !== -1) {
+            arrayTasks[indexTask].completed = true;
+            localStorage.setItem("tasks", JSON.stringify(arrayTasks));
+            //             console.log(arrayTasks[indexTask].completed);
+        }
     };
-
     return (
         <>
             <div className="item-task" >
