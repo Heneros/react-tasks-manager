@@ -32,13 +32,7 @@ export const TasksProvider = ({ children }) => {
     }
 
 
-    const [status, setEditStatus] = useState();
 
-    // function changeStatusTask(id) {
-    //     const tasksStatus = JSON.parse(localStorage.getItem('tasks'));
-    //     const newIndex = tasksStatus.findIndex(task => task.id === task.id);
-    //     console.log(newIndex);
-    // }
 
 
     return (

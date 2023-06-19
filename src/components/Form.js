@@ -56,7 +56,7 @@ export default function Form() {
     return (
         <>
             <Box sx={{ mt: 15 }}>
-                <form onSubmit={handleSubmit} >
+                <form onSubmit={handleSubmit} className='form' >
                     <FormControl >
                         <Input type="text" inputRef={nameRef} placeholder="Name" />
                         <TextField type="text" inputRef={descriptionRef} placeholder="Description" />

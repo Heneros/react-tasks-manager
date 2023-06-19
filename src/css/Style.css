@@ -1,0 +1,20 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-task {
+  text-align: center;
+  display: flex;
+}
+
+.form{
+  display: flex;
+}

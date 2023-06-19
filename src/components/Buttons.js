@@ -19,9 +19,8 @@ export default function Buttons() {
   
     const indexStatus = tasksFromLocalStorage.filter(task => task.completed === true);
 
-    console.log(indexStatus);
+    // console.log(indexStatus);
     return (
-
         <div>
             <button onClick={() => setFilter('all')}>All</button>
             <button onClick={() => setFilter('completed')}>Completed</button>

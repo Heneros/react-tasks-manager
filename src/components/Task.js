@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { editTask } from "../redux/reducer";
 import { useTasks } from '../contexts/TasksContext';
+import { Button, Card } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function Tasks({ id, name, description }) {
 
@@ -72,7 +75,7 @@ export default function Tasks({ id, name, description }) {
     };
     return (
         <>
-            <div className="item-task" >
+            <Card sx={{ m: 2, border: '1px solid grey' }} variant="outlined" className="item-task" >
 
                 {isEditing ? (
                     <div className="edit-form">
@@ -90,15 +93,16 @@ export default function Tasks({ id, name, description }) {
                         <button onClick={cancelEdit}>Cancel</button>
                     </div>
                 ) : (
-                    <div className="text" >
+                    <div className="text" sx={{ m: 5 }}>
                         <h5>{name}</h5>
                         <p>{description}</p>
-                        <button onClick={handleEdit}>Edit</button>
-                        <button onClick={handleRemove}>Delete</button>
-                        <button onClick={handleMoveToCompleted}>Move to Completed</button>
+                        <Button onClick={handleEdit}>Edit</Button>
+                        {/* <button >Delete</button> */}
+                        <Button onClick={handleRemove} sx={{ m: 2 }} variant="outlined" startIcon={<DeleteIcon />} color="error">Delete</Button>
+                        <Button onClick={handleMoveToCompleted} variant="outlined">Move to Completed</Button>
                     </div>
                 )}
-            </div>
+            </Card >
         </>
     );
 }

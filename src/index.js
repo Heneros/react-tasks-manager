@@ -10,6 +10,7 @@ import { TasksProvider } from './contexts/TasksContext';
 import Faq from './pages/Faq';
 import Layout from './pages/Layout';
 import Homepage from './pages/Homepage';
+import './css/Style.css';
 
 
 const router = createBrowserRouter([
