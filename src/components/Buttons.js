@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useTasks } from '../contexts/TasksContext'
 import Task from './Task';
+import Form from './Form';
+import Search from './Search';
+import "../css/NavigationTasks.css";
 
 export default function Buttons() {
     const { tasks } = useTasks();
@@ -16,15 +19,19 @@ export default function Buttons() {
         }
     })
     const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
-  
-    const indexStatus = tasksFromLocalStorage.filter(task => task.completed === true);
 
-    // console.log(indexStatus);
+
     return (
         <div>
-            <button onClick={() => setFilter('all')}>All</button>
-            <button onClick={() => setFilter('completed')}>Completed</button>
-            <button onClick={() => setFilter('progress')}>Progress</button>
+            <div className="navigation-tasks">
+                <Form />
+                <Search />
+                <div className="buttons">
+                    <button onClick={() => setFilter('all')}>All</button>
+                    <button onClick={() => setFilter('completed')}>Completed</button>
+                    <button onClick={() => setFilter('progress')}>Progress</button>
+                </div>
+            </div>
             <div className="tasks"
                 style={{}}
             >
