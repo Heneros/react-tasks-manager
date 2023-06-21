@@ -21,7 +21,6 @@ export default function Form() {
             alert("Empty string");
         } else {
             const id = Date.now()
-            const intger = String(id);
             const newTask = {
                 id: Date.now(),
                 name: nameRef.current.value,

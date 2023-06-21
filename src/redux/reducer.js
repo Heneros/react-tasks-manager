@@ -25,7 +25,15 @@ const reducerTasks = createSlice({
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
         },
-        
+        searchTask: (state, action) => {
+            const { name, description } = action.payload;
+            const searchText = state.filter((task) =>
+                ///поиск 
+                task.name.toLowerCase.includes(name.toLowerCase()) || task.description.toLowerCase().includes(description.toLowerCase())
+            )
+            state.searchText = searchText;
+        }
+
 
 
     },
@@ -34,7 +42,7 @@ const reducerTasks = createSlice({
 
 
 
-export const { addTask, editTask } = reducerTasks.actions;
+export const { addTask, editTask, searchTask } = reducerTasks.actions;
 export const reducer = reducerTasks.reducer;
 
 

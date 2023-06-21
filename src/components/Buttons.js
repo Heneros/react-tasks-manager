@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Button } from '@mui/material';
+
 import { useTasks } from '../contexts/TasksContext'
 import Task from './Task';
 import Form from './Form';
@@ -27,13 +29,13 @@ export default function Buttons() {
                 <Form />
                 <Search />
                 <div className="buttons">
-                    <button onClick={() => setFilter('all')}>All</button>
-                    <button onClick={() => setFilter('completed')}>Completed</button>
-                    <button onClick={() => setFilter('progress')}>Progress</button>
+                    <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('all')}>All</Button>
+                    <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('completed')}>Completed</Button>
+                    <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('progress')}>Progress</Button>
                 </div>
             </div>
             <div className="tasks"
-                style={{}}
+                style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}
             >
                 {tasksFromLocalStorage && tasksFromLocalStorage.length ? (
                     filteredTasks.map((task) => (
