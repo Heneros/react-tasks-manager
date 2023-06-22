@@ -72,6 +72,7 @@ export default function Tasks({ id, name, description }) {
             arrayTasks[indexTask].completed = true;
             localStorage.setItem("tasks", JSON.stringify(arrayTasks));
             //             console.log(arrayTasks[indexTask].completed);
+            window.location.reload();
         }
     };
     return (

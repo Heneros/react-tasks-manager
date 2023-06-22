@@ -9,9 +9,7 @@ export default function Homepage() {
     return (
  
         <div className="parent">
-  
             <Buttons />
-  
         </div>
   
     )

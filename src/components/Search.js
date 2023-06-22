@@ -2,19 +2,37 @@ import { TextField } from '@mui/material';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { searchTask } from '../redux/reducer';
+
+
 export default function Search() {
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
+
     const [searchText, setSearchText] = useState('');
 
 
-    return (
+    const handleSearchChange = (event) => {
+        setSearchText(event.target.value);
+    };
 
+    const handleSearch = () => {
+        dispatch(searchTask(searchText));
+        console.log(dispatch(searchTask(searchText)));
+    };
+
+    return (
         <TextField
             type="search"
             variant="filled"
             label="Search Field"
             fullWidth
-            onChange={searchText}
+            value={searchText}
+            onChange={handleSearchChange}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            }}
         />
 
     )

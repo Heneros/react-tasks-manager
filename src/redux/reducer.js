@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = JSON.parse(localStorage.getItem("tasks")) || [];
+// const initialState = JSON.parse(localStorage.getItem("tasks")) || [];
 
+const initialState = {
+    tasks: JSON.parse(localStorage.getItem("tasks")) || [],
+    searchResults: []
+}
 
 
 const reducerTasks = createSlice({
@@ -29,9 +33,11 @@ const reducerTasks = createSlice({
             const { name, description } = action.payload;
             const searchText = state.filter((task) =>
                 ///поиск 
-                task.name.toLowerCase.includes(name.toLowerCase()) || task.description.toLowerCase().includes(description.toLowerCase())
+                task.name.toLowerCase().includes(name.toLowerCase()) ||
+                task.description.toLowerCase().includes(description.toLowerCase())
+
             )
-            state.searchText = searchText;
+            state.searchResults = searchText;
         }
 
 
