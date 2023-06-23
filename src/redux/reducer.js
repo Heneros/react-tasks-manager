@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // const initialState = JSON.parse(localStorage.getItem("tasks")) || [];
 
+
+const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
 const initialState = {
-    tasks: JSON.parse(localStorage.getItem("tasks")) || [],
+    tasks: tasksFromLocalStorage || [],
     searchResults: []
-}
+};
 
 
 const reducerTasks = createSlice({
@@ -29,24 +31,15 @@ const reducerTasks = createSlice({
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
         },
-        searchTask: (state, action) => {
+        searchTask: (state = initialState, action) => {
             ///деструктуризация
             const { searchText } = action.payload;
-            // const filteredTasks = state.tasks.filter((task) =>
-            //     ///поиск 
-            //     task.name && task.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            //     task.description && task.description.toLowerCase().includes(searchText.toLowerCase())
-            //     // task.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            //     // task.description.toLowerCase().includes(searchText.toLowerCase())
-
-            // )
-
             const filteredTasks = state.tasks.filter((task) => {
                 const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
                 const descriptionMatch = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
                 return nameMatch || descriptionMatch;
-              });
-            state.searchResults = filteredTasks;
+            });
+            return { ...state, searchResults: filteredTasks };
         }
 
 
