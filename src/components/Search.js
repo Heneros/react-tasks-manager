@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { searchTask } from '../redux/reducer';
-
+import { useSelector } from 'react-redux';
 
 export default function Search() {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function Search() {
 
     const handleSearch = () => {
         dispatch(searchTask(searchText));
-        console.log(dispatch(searchTask(searchText)));
+        // console.log(dispatch(searchTask(searchText)));
     };
 
     return (

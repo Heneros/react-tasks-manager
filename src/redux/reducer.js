@@ -30,14 +30,23 @@ const reducerTasks = createSlice({
             }
         },
         searchTask: (state, action) => {
-            const { name, description } = action.payload;
-            const searchText = state.filter((task) =>
-                ///поиск 
-                task.name.toLowerCase().includes(name.toLowerCase()) ||
-                task.description.toLowerCase().includes(description.toLowerCase())
+            ///деструктуризация
+            const { searchText } = action.payload;
+            // const filteredTasks = state.tasks.filter((task) =>
+            //     ///поиск 
+            //     task.name && task.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            //     task.description && task.description.toLowerCase().includes(searchText.toLowerCase())
+            //     // task.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            //     // task.description.toLowerCase().includes(searchText.toLowerCase())
 
-            )
-            state.searchResults = searchText;
+            // )
+
+            const filteredTasks = state.tasks.filter((task) => {
+                const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
+                const descriptionMatch = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
+                return nameMatch || descriptionMatch;
+              });
+            state.searchResults = filteredTasks;
         }
 
 

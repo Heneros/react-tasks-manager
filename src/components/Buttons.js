@@ -6,9 +6,12 @@ import Task from './Task';
 import Form from './Form';
 import Search from './Search';
 import "../css/NavigationTasks.css";
+import { useSelector } from 'react-redux';
 
 export default function Buttons() {
-    const { tasks } = useTasks();
+    // const { tasks } = useTasks();
+    const tasks = useSelector(state => state.tasks);
+
     const [filter, setFilter] = useState('all');
 
     const filteredTasks = tasks.filter(task => {
