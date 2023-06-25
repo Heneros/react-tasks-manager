@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState = JSON.parse(localStorage.getItem("tasks")) || [];
-
 
 const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
 const initialState = {
@@ -32,14 +30,16 @@ const reducerTasks = createSlice({
             }
         },
         searchTask: (state = initialState, action) => {
-            ///деструктуризация
             const { searchText } = action.payload;
-            const filteredTasks = state.tasks.filter((task) => {
+            const filteredText = state.task.filter(task => {
+                // const nameMatch =  task.name &&
                 const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
-                const descriptionMatch = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
-                return nameMatch || descriptionMatch;
+                // const description = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
+
+                return nameMatch;
+                // const description;
             });
-            return { ...state, searchResults: filteredTasks };
+            state.searchResults = filteredText;
         }
 
 
