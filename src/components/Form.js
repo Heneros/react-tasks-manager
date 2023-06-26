@@ -30,19 +30,12 @@ export default function Form() {
                 progress: filter === 'all' || filter === 'progress',
             };
 
-            const tasksFromLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
-            const existingTask = tasksFromLocalStorage.find(task => task.id === newTask.id);
-            if (existingTask) {
-                alert("Task with the same ID already exists.");
-                return;
-            }
-
+  
             dispatch(addTask(newTask));
             nameRef.current.value = "";
             descriptionRef.current.value = "";
 
-            const updatedTasks = [...tasksFromLocalStorage, newTask];
-            localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
         }
         window.location.reload();
     };

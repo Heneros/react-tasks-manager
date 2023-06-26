@@ -13,8 +13,26 @@ const reducerTasks = createSlice({
     initialState,
     reducers: {
         addTask: (state, action) => {
-            state.push(action.payload);
-            localStorage.setItem("tasks", JSON.stringify(state));
+            const newTask = action.payload;
+            ///ищет текущую задачу
+            const existingTask = state.tasks.find((task) => task.id === newTask.id);
+            if (existingTask) {
+                alert("Task with the same ID already exists.");
+                return;
+            }
+
+            // // Создаем новый массив, добавляя новую задачу
+            // const updatedTasks = [...state.tasks, newTask];
+
+            // // Обновляем данные в localStorage
+            // localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
+            // // Возвращаем обновленный state с новым массивом задач
+            // return {
+            //     ...state,
+            //     tasks: updatedTasks,
+            // };
+
         },
 
         editTask: (state, action) => {
@@ -31,7 +49,7 @@ const reducerTasks = createSlice({
         },
         searchTask: (state = initialState, action) => {
             const { searchText } = action.payload;
-            const filteredText = state.task.filter(task => {
+            const filteredText = tasksFromLocalStorage.filter(task => {
                 // const nameMatch =  task.name &&
                 const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
                 // const description = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
