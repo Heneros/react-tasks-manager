@@ -20,18 +20,15 @@ const reducerTasks = createSlice({
                 alert("Task with the same ID already exists.");
                 return;
             }
+            ////Передается значение в updatedTasks
+            const updatedTasks = [...state.tasks, newTask];
+            localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
-            // // Создаем новый массив, добавляя новую задачу
-            // const updatedTasks = [...state.tasks, newTask];
-
-            // // Обновляем данные в localStorage
-            // localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-
-            // // Возвращаем обновленный state с новым массивом задач
-            // return {
-            //     ...state,
-            //     tasks: updatedTasks,
-            // };
+            ///объектный литерал
+            return {
+                ...state,
+                tasks: updatedTasks
+            }
 
         },
 
@@ -46,6 +43,9 @@ const reducerTasks = createSlice({
                 state[taskIndex] = { id, name, description };
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
+            // return {
+            //     ...state
+            // }
         },
         searchTask: (state = initialState, action) => {
             const { searchText } = action.payload;

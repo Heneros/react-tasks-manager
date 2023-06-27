@@ -29,11 +29,12 @@ export default function Buttons() {
         } else if (filter === 'progress') {
             return !task.completed;
         }
+    }).filter((task) => {
+        const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
+        const descriptionMatch = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
+        return nameMatch || descriptionMatch;
+    });
 
-        // const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
-        // const descriptionMatch = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
-        // return nameMatch || descriptionMatch;
-    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
