@@ -43,9 +43,6 @@ const reducerTasks = createSlice({
                 state[taskIndex] = { id, name, description };
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
-            // return {
-            //     ...state
-            // }
         },
         searchTask: (state = initialState, action) => {
             const { searchText } = action.payload;
@@ -58,17 +55,18 @@ const reducerTasks = createSlice({
                 // const description;
             });
             state.searchResults = filteredText;
+        },
+        updateTasks: (state, action) => {
+            state.tasks = action.payload;
+
         }
-
-
-
     },
 });
 
 
 
 
-export const { addTask, editTask, searchTask } = reducerTasks.actions;
+export const { addTask, editTask, searchTask, updateTasks } = reducerTasks.actions;
 export const reducer = reducerTasks.reducer;
 
 

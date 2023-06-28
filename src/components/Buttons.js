@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 // import { useTasks } from '../contexts/TasksContext'
 import Task from './Task';
 import Form from './Form';
-// import Search from './Search';
+
 import "../css/NavigationTasks.css";
 import { searchTask } from '../redux/reducer';
 
@@ -35,20 +35,10 @@ export default function Buttons() {
         return nameMatch || descriptionMatch;
     });
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // dispatch(searchTask({ searchText }));
-        // console.log(searchText);
-    };
-
-
     return (
         <div>
             <div className="navigation-tasks">
                 <Form />
-                {/* <Search /> */}
-                <form onSubmit={handleSubmit}>
                     <TextField
                         type="search"
                         variant="filled"
@@ -57,8 +47,6 @@ export default function Buttons() {
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                     />
-                </form>
-
                 <div className="buttons">
                     <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('all')}>All</Button>
                     <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('completed')}>Completed</Button>

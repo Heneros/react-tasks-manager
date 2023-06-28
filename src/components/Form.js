@@ -30,12 +30,9 @@ export default function Form() {
                 progress: filter === 'all' || filter === 'progress',
             };
 
-  
             dispatch(addTask(newTask));
             nameRef.current.value = "";
             descriptionRef.current.value = "";
-
-
         }
         window.location.reload();
     };
