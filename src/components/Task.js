@@ -14,32 +14,44 @@ export default function Tasks({ id, name, description }) {
     const [taskName, setTaskName] = useState(name);
     const [taskDescription, setTaskDescription] = useState(description);
 
-    const saveEdit = () => {
-        setIsEditing(false);
-        const tasksLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
 
-        const updatedTasks = tasksLocalStorage.map(task => {
-            if (task.id === id) {
-                return {
-                    ...task,
-                    name: taskName,
-                    description: taskDescription
-                }
-            }
-            return task;
-        });
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        // dispatch(updateTasks(updatedTasks))
-        window.location.reload();
 
-    }
-    const handlEdit = () => {
-        setIsEditing(true);
-    }
+    // const saveEdit = () => {
+    //     setIsEditing(false);
+    //     const tasksLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
 
+    //     const updatedTasks = tasksLocalStorage.map(task => {
+    //         if (task.id === id) {
+    //             return {
+    //                 ...task,
+    //                 name: taskName,
+    //                 description: taskDescription
+    //             }
+    //         }
+    //         return task;
+    //     });
+    //     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    //     window.location.reload();
+
+    // }
+    // const handlEdit = () => {
+    //     setIsEditing(true);
+    // }
+
+
+    const tasksLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
+    let uniqTasks = [...new Set(tasksLocalStorage)];
+    console.log(tasksLocalStorage);
     return (
         <>
-            <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} variant="outlined" className="item-task" >
+            {/* {tasksLocalStorage &&
+                tasksLocalStorage.map(item => (
+                    <div key={item.id}>
+                        {item.name}
+                    </div>
+                ))
+            } */}
+            {/* <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} variant="outlined" className="item-task" >
                 {isEditing ? (
                     <div className='edit-form'>
                         <Input
@@ -64,7 +76,7 @@ export default function Tasks({ id, name, description }) {
                         <Button onClick={handlEdit} variant="contained" startIcon={<EditIcon />} >Edit</Button>
                     </div>
                 )}
-            </Card >
+            </Card > */}
         </>
     );
 }

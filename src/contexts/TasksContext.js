@@ -39,7 +39,6 @@ export const TasksProvider = ({ children }) => {
         <TasksContext.Provider value={{
             tasks,
             addTask,
-            // changeStatusTask
         }}>
             {children}
         </TasksContext.Provider>

@@ -7,10 +7,16 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import store from './redux/store';
 import { TasksProvider } from './contexts/TasksContext';
+import './css/Style.css';
+
 import Faq from './pages/Faq';
 import Layout from './pages/Layout';
 import Homepage from './pages/Homepage';
-import './css/Style.css';
+import CreateTask from './pages/CreateTask';
+
+
+
+import EditTask from './pages/EditTask';
 
 
 const router = createBrowserRouter([
@@ -25,7 +31,16 @@ const router = createBrowserRouter([
       {
         path: 'faq',
         element: <Faq />
-      }
+      },
+      {
+        path: 'create-task',
+        element: <CreateTask />
+      },
+      {
+        path: 'edit/:id',
+        element: <EditTask />
+      },
+
     ]
   }
 ]);
