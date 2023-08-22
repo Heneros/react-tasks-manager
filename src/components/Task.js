@@ -39,9 +39,6 @@ export default function Tasks({ id, name, description }) {
     // }
 
 
-    const tasksLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
-    let uniqTasks = [...new Set(tasksLocalStorage)];
-    console.log(tasksLocalStorage);
     return (
         <>
             {/* {tasksLocalStorage &&

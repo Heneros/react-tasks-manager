@@ -17,6 +17,7 @@ import CreateTask from './pages/CreateTask';
 
 
 import EditTask from './pages/EditTask';
+import DetailsTask from './pages/DetailsTask';
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'create-task',
         element: <CreateTask />
+      },
+      {
+        path: 'tasks/:id',
+        element: <DetailsTask />
       },
       {
         path: 'edit/:id',

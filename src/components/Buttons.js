@@ -10,9 +10,16 @@ import { searchTask } from '../redux/reducer';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Link, useNavigate } from 'react-router-dom';
+
 
 
 export default function Buttons() {
+    const navigate = useNavigate();
+
+    const LoadDetail = (id) => {
+        navigate(`/tasks/${id}`);
+    }
 
     const dispatch = useDispatch();
     const tasks = useSelector(state => state.tasks);
@@ -20,6 +27,8 @@ export default function Buttons() {
 
     const [filter, setFilter] = useState('all');
     const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
+
+
 
     const filteredTasks = tasks.filter(task => {
         if (filter === 'all') {
@@ -39,14 +48,14 @@ export default function Buttons() {
         <div>
             <div className="navigation-tasks">
                 <Form />
-                    <TextField
-                        type="search"
-                        variant="filled"
-                        label="Search Field"
-                        fullWidth
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
+                <TextField
+                    type="search"
+                    variant="filled"
+                    label="Search Field"
+                    fullWidth
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                />
                 <div className="buttons">
                     <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('all')}>All</Button>
                     <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('completed')}>Completed</Button>
@@ -57,8 +66,14 @@ export default function Buttons() {
                 style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}
             >
                 {tasksFromLocalStorage && tasksFromLocalStorage.length ? (
-                    filteredTasks.map((task) =>
-                        <Task key={task.id} name={task.name} description={task.description} />
+                    filteredTasks.map((task) => (
+                        <div key={task.id} >
+                            <span>{task.name}</span>
+                            <button onClick={() => { LoadDetail(task.id) }}>Details</button>
+                        </div>
+                        // <span>{task.name}</span>
+                    )
+                        // <Task key={task.id} name={task.name} description={task.description} />
                     )
                 ) : (
                     <p>No tasks been added.</p>
