@@ -67,13 +67,8 @@ export default function Buttons() {
             >
                 {tasksFromLocalStorage && tasksFromLocalStorage.length ? (
                     filteredTasks.map((task) => (
-                        <div key={task.id} >
-                            <span>{task.name}</span>
-                            <button onClick={() => { LoadDetail(task.id) }}>Details</button>
-                        </div>
-                        // <span>{task.name}</span>
+                        <Task  {...task} />
                     )
-                        // <Task key={task.id} name={task.name} description={task.description} />
                     )
                 ) : (
                     <p>No tasks been added.</p>
