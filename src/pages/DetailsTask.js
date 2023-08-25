@@ -5,22 +5,28 @@ import { Box, Button, FormControl, FormGroup, FormHelperText, Input, TextField }
 export default function DetailsTask({ name, description }) {
   const { id } = useParams();
   const [task, setTask] = useState();
+  const tasksJSON = JSON.parse(localStorage.getItem("tasks") || []);
 
+
+  // console.log(tasksJSON);
   useEffect(() => {
     const tasksJSON = localStorage.getItem("tasks");
     const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
 
+    const foundTask = tasks.find((t) => t.id === parseInt(id));
 
-    const foundTask = tasks.find((t) => t.id === id);
 
     if (foundTask) {
       setTask(foundTask);
     } else {
       setTask(null);
     }
-    console.log(foundTask);
+  }, [id, name])
 
-  }, [id])
+  // const nameTitle = task.name;
+
+  const taskName = task ? task.name : 'No task found';
+  const taskDescription = task ? task.description : 'No task found';
 
 
   return (
@@ -28,10 +34,9 @@ export default function DetailsTask({ name, description }) {
       Details:
       {task ? (
         <>
-          <h2>{task.name}</h2>
-          <p>{task.description}</p>
+          <h2>{taskName}</h2>
+          <p>{taskDescription}</p>
         </>
-
       ) : (
         <span>
           No tasks

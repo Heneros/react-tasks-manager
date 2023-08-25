@@ -12,8 +12,7 @@ import './css/Style.css';
 import Faq from './pages/Faq';
 import Layout from './pages/Layout';
 import Homepage from './pages/Homepage';
-import CreateTask from './pages/CreateTask';
-
+// import CreateTask from './pages/CreateTask';
 
 
 import EditTask from './pages/EditTask';
@@ -33,10 +32,10 @@ const router = createBrowserRouter([
         path: 'faq',
         element: <Faq />
       },
-      {
-        path: 'create-task',
-        element: <CreateTask />
-      },
+      // {
+      //   path: 'create-task',
+      //   element: <CreateTask />
+      // },
       {
         path: 'tasks/:id',
         element: <DetailsTask />

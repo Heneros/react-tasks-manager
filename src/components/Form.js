@@ -20,7 +20,7 @@ export default function Form() {
         if (nameRef.current.value === "" || descriptionRef.current.value === "") {
             alert("Empty string");
         } else {
-            const id = Date.now()
+            // const id = Date.now()
             const newTask = {
                 id: Date.now(),
                 name: nameRef.current.value,

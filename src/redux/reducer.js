@@ -31,19 +31,6 @@ const reducerTasks = createSlice({
             }
 
         },
-
-        editTask: (state, action) => {
-            const { id, name, description } = action.payload;
-            const taskIndex = state.findIndex((task) => task.id === task.id);
-
-            //В коде if (taskIndex !== -1) проверяется, был ли найден индекс задачи в состоянии state
-            // Если taskIndex не равен -1, это означает, что задача с указанным id была найдена в состоянии.
-            if (taskIndex !== -1) {
-                ///В этой строке происходит замена задачи в массиве state новым объектом, содержащим обновленные значения id, name и description.
-                state[taskIndex] = { id, name, description };
-                localStorage.setItem('tasks', JSON.stringify(state));
-            }
-        },
         searchTask: (state = initialState, action) => {
             const { searchText } = action.payload;
             const filteredText = tasksFromLocalStorage.filter(task => {

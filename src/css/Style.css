@@ -15,6 +15,17 @@ body {
   display: flex;
 }
 
-.form{
+.form {
   display: flex;
+}
+
+.item-task {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

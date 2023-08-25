@@ -13,19 +13,24 @@ export default function Task({ id, name, description }) {
     return (
         <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} variant="outlined" className="item-task" >
             <div className="text" sx={{ m: 5 }}>
-                <h2>{name} </h2>
-                <p>{description}</p>
+                <h2>{name.substring(0, 10)} </h2>
+                <p>
+                    {/* {description.substring(0, 15)} */}
+              {description.length > 25 ? description.substring(0, 15) + '...' : description}
+                </p>
             </div>
-            <Link to={`/edit/${id}`}>
-                <Button variant="contained" startIcon={<EditIcon />} >
-                    Edit
-                </Button>
-            </Link>
-            <Link to={`/tasks/${id}`}>
-                <Button variant="contained" startIcon={<EditIcon />} >
-                    Details
-                </Button>
-            </Link>
+            <div className="item-btns">
+                <Link to={`/edit/${id}`}>
+                    <Button variant="contained" startIcon={<EditIcon />} >
+                        Edit
+                    </Button>
+                </Link>
+                <Link to={`/tasks/${id}`}>
+                    <Button variant="contained" startIcon={<EditIcon />} >
+                        Details
+                    </Button>
+                </Link>
+            </div>
         </Card >
 
 

@@ -67,7 +67,7 @@ export default function Buttons() {
             >
                 {tasksFromLocalStorage && tasksFromLocalStorage.length ? (
                     filteredTasks.map((task) => (
-                        <Task  {...task} />
+                        <Task {...task} />
                     )
                     )
                 ) : (
