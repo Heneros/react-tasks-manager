@@ -5,7 +5,7 @@ import { Box, Button, FormControl, FormGroup, FormHelperText, Input, TextField }
 export default function DetailsTask({ name, description }) {
   const { id } = useParams();
   const [task, setTask] = useState();
-  const tasksJSON = JSON.parse(localStorage.getItem("tasks") || []);
+  // const tasksJSON = JSON.parse(localStorage.getItem("tasks") || []);
 
 
   // console.log(tasksJSON);

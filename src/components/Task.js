@@ -15,7 +15,6 @@ export default function Task({ id, name, description }) {
             <div className="text" sx={{ m: 5 }}>
                 <h2>{name.substring(0, 10)} </h2>
                 <p>
-                    {/* {description.substring(0, 15)} */}
               {description.length > 25 ? description.substring(0, 15) + '...' : description}
                 </p>
             </div>
