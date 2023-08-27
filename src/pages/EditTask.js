@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Box, Button, FormControl, FormGroup, FormHelperText, Input, InputLabel, TextField, TextareaAutosize, Typography } from '@mui/material'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, Input, InputLabel, TextField, TextareaAutosize, Typography } from '@mui/material'
+
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 
 
 export default function EditTask() {
@@ -11,6 +15,11 @@ export default function EditTask() {
   const [task, setTask] = useState({});
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [completed, setСompleted] = useState(false);
+
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
 
   useEffect(() => {
@@ -22,6 +31,7 @@ export default function EditTask() {
       setTask(foundTask);
       setName(foundTask.name);
       setDescription(foundTask.description);
+      setСompleted(foundTask.completed);
     } else {
       setTask({});
       setName("");
@@ -33,15 +43,51 @@ export default function EditTask() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    //  console.log(taskData);
+    const tasksJSON = localStorage.getItem("tasks");
+    const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
 
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === parseInt(id)) {
+        return {
+          ...task,
+          name: name,
+          description: description,
+          completed: completed
+        }
+
+      }
+      return task;
+    });
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+
+    setSnackbarMessage("Task been updted");
+
+    setSnackbarOpen(true);
   }
+
 
   return (
     <Box sx={{ mt: 15 }} style={{ "textAlign": "center" }}>
       <Typography variant="h5">Edit Task</Typography>
-      <form sx={{ pt: 5 }} onSubmit={onSubmit}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={() => setSnackbarOpen(false)}
+          severity="success" 
+        >
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
+      <form sx={{ pt: 5 }} onSubmit={handleSubmit}>
         <TextField
           value={id}
           label="ID"
@@ -59,33 +105,33 @@ export default function EditTask() {
             required
           />
         </FormControl>
-
         <FormControl>
           <TextField
             type="text"
             required
-
-
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-
-            placeholder=""
             multiline
             minRows={2}
             maxRows={5}
-
-
           />
         </FormControl>
-        <TextField
-          type="text"
-
-
-
+        <FormControlLabel
+          label="Is done?"
+          control={
+            <Checkbox
+              checked={completed}
+              onChange={(e) => setСompleted(e.target.checked)}
+            />
+          }
         />
-        <Button type="submit" size="large" variant="contained">Submit</Button>
+        <Button type="submit" size="large" variant="contained">Update</Button>
       </form>
-
+      <Link to="/" className=''>
+        <Button variant="contained" color="success">
+          Back
+        </Button>
+      </Link>
     </Box>
   )
 }

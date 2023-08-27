@@ -13,9 +13,11 @@ export default function Task({ id, name, description }) {
     return (
         <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} variant="outlined" className="item-task" >
             <div className="text" sx={{ m: 5 }}>
-                <h2>{name.substring(0, 10)} </h2>
+                <h2>
+                    {name.length > 15 ? name.substring(0, 15) + '...' : name}
+                </h2>
                 <p>
-              {description.length > 25 ? description.substring(0, 15) + '...' : description}
+                    {description.length > 25 ? description.substring(0, 25) +  `...` : description}
                 </p>
             </div>
             <div className="item-btns">
