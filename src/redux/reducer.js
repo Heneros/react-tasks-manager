@@ -24,36 +24,31 @@ const reducerTasks = createSlice({
             const updatedTasks = [...state.tasks, newTask];
             localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
-            ///объектный литерал
             return {
                 ...state,
                 tasks: updatedTasks
             }
-
         },
-        searchTask: (state = initialState, action) => {
+        searchTask: (state, action) => {
             const { searchText } = action.payload;
-            const filteredText = tasksFromLocalStorage.filter(task => {
-                // const nameMatch =  task.name &&
+
+            const filteredText = state.tasks.filter(task => {
                 const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
-                // const description = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
-
                 return nameMatch;
-                // const description;
             });
-            state.searchResults = filteredText;
-        },
-        updateTasks: (state, action) => {
-            state.tasks = action.payload;
 
-        }
+            state.searchResults = filteredText;
+
+            // Добавьте это, чтобы обновить текст фильтрации в хранилище
+            state.filterText = searchText;
+        },
     },
 });
 
 
 
 
-export const { addTask, editTask, searchTask, updateTasks } = reducerTasks.actions;
+export const { addTask, editTask, searchTask } = reducerTasks.actions;
 export const reducer = reducerTasks.reducer;
 
 

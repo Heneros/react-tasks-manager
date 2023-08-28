@@ -6,7 +6,6 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 
-
 export default function EditTask() {
 
 
@@ -39,10 +38,6 @@ export default function EditTask() {
     }
   }, [id]);
 
-
-
-  const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     //  console.log(taskData);
@@ -65,7 +60,6 @@ export default function EditTask() {
 
 
     setSnackbarMessage("Task been updted");
-
     setSnackbarOpen(true);
   }
 
@@ -82,50 +76,52 @@ export default function EditTask() {
           elevation={6}
           variant="filled"
           onClose={() => setSnackbarOpen(false)}
-          severity="success" 
+          severity="success"
         >
           {snackbarMessage}
         </MuiAlert>
       </Snackbar>
-      <form sx={{ pt: 5 }} onSubmit={handleSubmit}>
-        <TextField
-          value={id}
-          label="ID"
-          disabled
-          followCursor
-        />
-        <FormHelperText id="my-helper-text">
-          Your id
-        </FormHelperText>
-        <FormControl>
-          <TextField
-            value={name}
-            label="Name"
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </FormControl>
-        <FormControl>
-          <TextField
-            type="text"
-            required
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            multiline
-            minRows={2}
-            maxRows={5}
-          />
-        </FormControl>
-        <FormControlLabel
-          label="Is done?"
-          control={
-            <Checkbox
-              checked={completed}
-              onChange={(e) => setСompleted(e.target.checked)}
+      <form sx={{ pt: 5 }} className='form-edit' onSubmit={handleSubmit}>
+        <FormGroup>
+        <FormControl sx={{ pt: 5}}>
+            <TextField
+              value={id}
+              label="ID"
+              disabled
+              followCursor
             />
-          }
-        />
-        <Button type="submit" size="large" variant="contained">Update</Button>
+          </FormControl>
+          <FormControl sx={{ pt: 2}}>
+            <TextField
+              label="Name Task"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </FormControl>
+          <FormControl sx={{ pt: 2}}>
+            <TextField
+                label="Description Task"
+              type="text"
+              required
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              multiline
+              minRows={2}
+              maxRows={5}
+            />
+          </FormControl>
+          <FormControlLabel
+            label="Is done?"
+            control={
+              <Checkbox
+                checked={completed}
+                onChange={(e) => setСompleted(e.target.checked)}
+              />
+            }
+          />
+          <Button type="submit" size="large" variant="contained">Update Task</Button>
+        </FormGroup>
       </form>
       <Link to="/" className=''>
         <Button variant="contained" color="success">

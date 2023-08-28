@@ -30,5 +30,8 @@ body {
   justify-content: space-between;
 }
 
-
-
+/* .form-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} */

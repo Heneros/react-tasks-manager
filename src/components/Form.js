@@ -5,12 +5,13 @@ import { addTask } from '../redux/reducer';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidV4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
 export default function Form() {
     const nameRef = useRef();
     const descriptionRef = useRef();
     const dispatch = useDispatch();
-    const { tasks } = useTasks();
+    const navigate = useNavigate();
 
 
     const [filter, setFilter] = useLocalStorage("filter", 'all');
@@ -20,7 +21,6 @@ export default function Form() {
         if (nameRef.current.value === "" || descriptionRef.current.value === "") {
             alert("Empty string");
         } else {
-            // const id = Date.now()
             const newTask = {
                 id: Date.now(),
                 name: nameRef.current.value,
@@ -30,11 +30,14 @@ export default function Form() {
                 progress: filter === 'all' || filter === 'progress',
             };
 
+
+
             dispatch(addTask(newTask));
             nameRef.current.value = "";
             descriptionRef.current.value = "";
         }
         window.location.reload();
+
     };
 
     function handleSubmit(e) {
@@ -47,7 +50,7 @@ export default function Form() {
             <Box sx={{ mt: 15 }}>
                 <form onSubmit={handleSubmit} className='form' >
                     <FormControl >
-                        <Input type="text" inputRef={nameRef} placeholder="Name" />
+                        <TextField type="text" inputRef={nameRef} placeholder="Name" />
                         <TextField type="text" inputRef={descriptionRef} placeholder="Description" />
                         <Button type="submit">
                             Submit
