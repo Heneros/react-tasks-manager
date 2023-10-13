@@ -1,17 +1,46 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { editTask, updateTasks } from "../redux/reducer";
+import { editTask, removeTask, updateTasks } from "../redux/reducer";
 import { useTasks } from '../contexts/TasksContext';
-import { Box, Button, Card, FormControl, Input } from '@mui/material';
+import { Box, Button, Card, FormControl, IconButton, Input } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link, useParams } from 'react-router-dom';
 
+import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
+
 export default function Task({ id, name, description }) {
+    const dispatch = useDispatch();
+
+
+
+
+    const removeById = (e) => {
+        e.preventDefault();
+  
+        if (window.confirm("Are you sure you want to delete")) {
+            // const tasksJSON = localStorage.getItem("tasks");
+            // let tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
+            // tasks = tasks.filter(task => task.id !== parseInt(id));
+            // localStorage.setItem("tasks", JSON.stringify(tasks));
+            dispatch(removeTask(id));
+
+            // window.location.reload();
+        }
+    }
 
     return (
-        <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} variant="outlined" className="item-task" >
+        <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} color="success" variant="outlined" className="item-task" >
+
+            <IconButton
+                sx={{ display: 'flex', justifyContent: 'right' }}
+                color="error"
+                onClick={removeById}
+            >
+                <CloseIcon fontSize="inherit" />
+            </IconButton>
             <div className="text" sx={{ m: 5 }}>
                 <h2>
                     {name && name.length > 15 ? name.substring(0, 15) + '...' : name}
@@ -27,7 +56,9 @@ export default function Task({ id, name, description }) {
                     </Button>
                 </Link>
                 <Link to={`/tasks/${id}`}>
-                    <Button variant="contained" startIcon={<EditIcon />} >
+                    <Button variant="contained"
+                        startIcon={<InfoIcon />}
+                    >
                         Details
                     </Button>
                 </Link>

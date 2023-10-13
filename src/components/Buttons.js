@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { Button, TextField } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+
 
 // import { useTasks } from '../contexts/TasksContext'
 import Task from './Task';
 import Form from './Form';
-
 import "../css/NavigationTasks.css";
-import { searchTask } from '../redux/reducer';
-
 import { useDispatch, useSelector } from 'react-redux';
-
-import { Link, useNavigate } from 'react-router-dom';
-
 
 
 export default function Buttons() {
-
+    const dispatch = useDispatch();
+    const tasks = useSelector((state) => state.tasks);
+    // const { tasksItems } = tasks;
+    console.log(tasks)
 
     const [searchText, setSearchText] = useState('');
     const [filter, setFilter] = useState('all');
 
-    const tasksJSON = localStorage.getItem("tasks");
-    const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
+
 
     const filteredTasks = tasks.filter(task => {
         if (filter === 'all') {
@@ -37,8 +36,6 @@ export default function Buttons() {
         return nameMatch || descriptionMatch;
     });
 
-
-
     return (
         <div>
             <div className="navigation-tasks">
@@ -53,11 +50,32 @@ export default function Buttons() {
                 />
                 <div className="buttons">
                     <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('all')}>All</Button>
-                    <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('completed')}>Completed</Button>
-                    <Button sx={{ m: 1 }} variant="contained" onClick={() => setFilter('progress')}>Progress</Button>
+                    <Button sx={{ m: 1 }}
+                        variant="contained"
+                        startIcon={<DoneIcon />}
+                        onClick={() => setFilter('completed')}
+                        color="success"
+                    >Completed</Button>
+                    <Button
+                        sx={{ m: 1 }}
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => setFilter('progress')}
+                        startIcon={<HourglassBottomIcon />}
+                    >Progress</Button>
                 </div>
             </div>
             <div className="tasks" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}  >
+                {/* {tasks.map( (task) => (
+                    <Task
+                        id={task.id}
+                        name={task.name}
+                        description={task.description}
+                        completed={task.completed}
+                    />
+                )
+                )} */}
+
                 {tasks && tasks.length ? (
                     filteredTasks.map((task) => (
                         // <Task {...task} />
@@ -67,7 +85,6 @@ export default function Buttons() {
                             description={task.description}
                             completed={task.completed}
                         />
-
                     ))
                 ) : (
                     <p>No tasks been added.</p>

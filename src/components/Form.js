@@ -25,18 +25,17 @@ export default function Form() {
                 id: Date.now(),
                 name: nameRef.current.value,
                 description: descriptionRef.current.value,
-                completed: false,
+                // completed: false,
                 all: filter === 'all' || filter === 'completed',
                 progress: filter === 'all' || filter === 'progress',
             };
-
 
 
             dispatch(addTask(newTask));
             nameRef.current.value = "";
             descriptionRef.current.value = "";
         }
-        window.location.reload();
+        // window.location.reload();
 
     };
 
@@ -50,10 +49,10 @@ export default function Form() {
             <Box sx={{ mt: 15 }}>
                 <form onSubmit={handleSubmit} className='form' >
                     <FormControl >
-                        <TextField type="text" inputRef={nameRef} placeholder="Name" />
+                        <TextField type="text" inputRef={nameRef} placeholder="Name of task" />
                         <TextField type="text" inputRef={descriptionRef} placeholder="Description" />
-                        <Button type="submit">
-                            Submit
+                        <Button type="submit" fullWidth variant="outlined" >
+                            Add Task
                         </Button>
                     </FormControl>
                     <span></span>
