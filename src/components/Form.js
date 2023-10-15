@@ -1,8 +1,8 @@
 import { Box, Button, FormControl, FormGroup, FormHelperText, Input, TextField } from '@mui/material'
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTasks } from '../contexts/TasksContext';
 import { addTask } from '../redux/reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidV4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
@@ -11,30 +11,32 @@ export default function Form() {
     const nameRef = useRef();
     const descriptionRef = useRef();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-
     const [filter, setFilter] = useLocalStorage("filter", 'all');
+    const tasks = useSelector((state) => state.tasks); // Получаем задачи из Redux
+
+
 
 
     const add = () => {
-        if (nameRef.current.value === "" || descriptionRef.current.value === "") {
-            alert("Empty string");
-        } else {
-            const newTask = {
-                id: Date.now(),
-                name: nameRef.current.value,
-                description: descriptionRef.current.value,
-                // completed: false,
-                all: filter === 'all' || filter === 'completed',
-                progress: filter === 'all' || filter === 'progress',
-            };
+        // if (nameRef.current.value === "" || descriptionRef.current.value === "") {
+        //     alert("Empty string");
+        // } else {
+        const newTask = {
+            id: Date.now(),
+            name: nameRef.current.value,
+            description: descriptionRef.current.value,
+            // completed: false,
+            all: filter === 'all' || filter === 'completed',
+            progress: filter === 'all' || filter === 'progress',
+        };
+        // console.log(newTask)
 
+        dispatch(addTask(newTask));
+        // localStorage.setItem("tasks", JSON.stringify(newTask)); // Обновить localStorage
 
-            dispatch(addTask(newTask));
-            nameRef.current.value = "";
-            descriptionRef.current.value = "";
-        }
+        nameRef.current.value = "";
+        descriptionRef.current.value = "";
+        // }
         // window.location.reload();
 
     };

@@ -14,15 +14,18 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function Buttons() {
     const dispatch = useDispatch();
     const tasks = useSelector((state) => state.tasks);
-    // const { tasksItems } = tasks;
+
+
     console.log(tasks)
 
     const [searchText, setSearchText] = useState('');
     const [filter, setFilter] = useState('all');
 
 
+    //
 
-    const filteredTasks = tasks.filter(task => {
+    const filteredTasks = (tasks || []).filter((task) => {
+
         if (filter === 'all') {
             return true;
         } else if (filter === 'completed') {
@@ -35,6 +38,9 @@ export default function Buttons() {
         const descriptionMatch = task.description && task.description.toLowerCase().includes(searchText.toLowerCase());
         return nameMatch || descriptionMatch;
     });
+
+    // console.log(filteredTasks)
+
 
     return (
         <div>
@@ -66,17 +72,21 @@ export default function Buttons() {
                 </div>
             </div>
             <div className="tasks" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}  >
-                {/* {tasks.map( (task) => (
-                    <Task
-                        id={task.id}
-                        name={task.name}
-                        description={task.description}
-                        completed={task.completed}
-                    />
-                )
-                )} */}
-
                 {tasks && tasks.length ? (
+                    filteredTasks.map((task) => (
+                        <Task
+                            id={task.id}
+                            name={task.name}
+                            description={task.description}
+                            completed={task.completed}
+                        />
+                    )
+                    )) : (
+                    <p>No tasks been added.</p>
+
+                )}
+
+                {/* {tasks && tasks.length ? (
                     filteredTasks.map((task) => (
                         // <Task {...task} />
                         <Task
@@ -88,7 +98,7 @@ export default function Buttons() {
                     ))
                 ) : (
                     <p>No tasks been added.</p>
-                )}
+                )} */}
             </div>
         </div>
     )

@@ -4,6 +4,7 @@ import { Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormHe
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { useSelector } from 'react-redux';
 
 
 export default function EditTask() {
@@ -19,11 +20,11 @@ export default function EditTask() {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-
+  const tasks = useSelector((state) => state.tasks);
 
   useEffect(() => {
-    const tasksJSON = localStorage.getItem("tasks");
-    const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
+    // const tasksJSON = localStorage.getItem("tasks");
+    // const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
     const foundTask = tasks.find((t) => t.id === parseInt(id));
 
     if (foundTask) {
@@ -41,8 +42,8 @@ export default function EditTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //  console.log(taskData);
-    const tasksJSON = localStorage.getItem("tasks");
-    const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
+    // const tasksJSON = localStorage.getItem("tasks");
+    // const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
 
     const updatedTasks = tasks.map((task) => {
       if (task.id === parseInt(id)) {
@@ -83,7 +84,7 @@ export default function EditTask() {
       </Snackbar>
       <form sx={{ pt: 5 }} className='form-edit' onSubmit={handleSubmit}>
         <FormGroup>
-        <FormControl sx={{ pt: 5}}>
+          <FormControl sx={{ pt: 5 }}>
             <TextField
               value={id}
               label="ID"
@@ -91,7 +92,7 @@ export default function EditTask() {
               followCursor
             />
           </FormControl>
-          <FormControl sx={{ pt: 2}}>
+          <FormControl sx={{ pt: 2 }}>
             <TextField
               label="Name Task"
               value={name}
@@ -99,9 +100,9 @@ export default function EditTask() {
               required
             />
           </FormControl>
-          <FormControl sx={{ pt: 2}}>
+          <FormControl sx={{ pt: 2 }}>
             <TextField
-                label="Description Task"
+              label="Description Task"
               type="text"
               required
               value={description}
