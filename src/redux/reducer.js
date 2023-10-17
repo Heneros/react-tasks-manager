@@ -1,10 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { updateTask } from "../utils/taskUtil";
 
 
 
 const initialState = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : { tasks: [] };
 
+
+export const editTask = createAsyncThunk('tasks/updatePost', async (initialState, { getState }) => {
+    const { id } = initialState;
+    const state = getState();
+
+    try {
+        // const tasks = state.tasks;
+        const updatedTasks = state.tasks.map(task => (task.id === id ? initialState : task));
+        //   return updateTask(updatedTasks);
+        // console.log(updatedTasks);
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 const reducerTasks = createSlice({
     name: "tasks",
@@ -35,17 +49,29 @@ const reducerTasks = createSlice({
             });
 
             state.tasks = updatedTasks;
-
-            localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-
+            // localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+            return updateTask(state);
         }
     },
+    extraReducers(builder) {
+        builder
+            .addCase(editTask.fulfilled, (state, action) => {
+                if (!action.payload || !state.tasks.id) {
+                    console.log('Update could not complete');
+                    console.log(action.payload);
+                    return;
+                }
+                const { id } = action.payload;
+                const tasks = state.tasks.filter(task => task.id !== id);
+                state.tasks = [...tasks, action.payload];
+            })
+    }
 });
 
 
 
 
-export const { addTask, editTask, searchTask, removeTask } = reducerTasks.actions;
+export const { addTask, searchTask, removeTask } = reducerTasks.actions;
 export const reducer = reducerTasks.reducer;
 
 

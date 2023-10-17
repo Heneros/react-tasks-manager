@@ -4,14 +4,13 @@ import { Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormHe
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { editTask } from '../redux/reducer';
 
 
 export default function EditTask() {
-
-
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   const [task, setTask] = useState({});
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -20,50 +19,58 @@ export default function EditTask() {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const tasks = useSelector((state) => state.tasks);
+  const { tasks } = useSelector((state) => state.tasks);
 
   useEffect(() => {
-    // const tasksJSON = localStorage.getItem("tasks");
-    // const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
-    const foundTask = tasks.find((t) => t.id === parseInt(id));
+    //   // const tasksJSON = localStorage.getItem("tasks");
+    //   // const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
+    //   const foundTask = tasks.find((t) => t.id === parseInt(id));
 
-    if (foundTask) {
-      setTask(foundTask);
-      setName(foundTask.name);
-      setDescription(foundTask.description);
-      setСompleted(foundTask.completed);
-    } else {
-      setTask({});
-      setName("");
-      setDescription("");
+    //   if (foundTask) {
+    //     setTask(foundTask);
+    //     setName(foundTask.name);
+    //     setDescription(foundTask.description);
+    //     setСompleted(foundTask.completed);
+    //   } else {
+    //     setTask({});
+    //     setName("");
+    //     setDescription("");
+    //   }
+    // }, [id]);
+
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+
+    //   const updatedTasks = tasks.map((task) => {
+    //     if (task.id === parseInt(id)) {
+    //       return {
+    //         ...task,
+    //         name: name,
+    //         description: description,
+    //         completed: completed
+    //       }
+
+    //     }
+    //     return task;
+    //   });
+    //   localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+
+    //   setSnackbarMessage("Task been updted");
+    //   setSnackbarOpen(true);
+  })
+  const onSaveTaskClicked = () => {
+    try {
+      const editedTask = { id: task.id, name, description, completed };
+      console.log(id);
+      // console.log('Success');
+      // // dispatch(editTask())
+      // console.log(dispatch(editTask({ id: task.id }))).unwrap();
+    } catch (error) {
+      console.log('Error EditTask' . error)
     }
-  }, [id]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //  console.log(taskData);
-    // const tasksJSON = localStorage.getItem("tasks");
-    // const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
-
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === parseInt(id)) {
-        return {
-          ...task,
-          name: name,
-          description: description,
-          completed: completed
-        }
-
-      }
-      return task;
-    });
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-
-    setSnackbarMessage("Task been updted");
-    setSnackbarOpen(true);
   }
-
 
   return (
     <Box sx={{ mt: 15 }} style={{ "textAlign": "center" }}>
@@ -82,7 +89,7 @@ export default function EditTask() {
           {snackbarMessage}
         </MuiAlert>
       </Snackbar>
-      <form sx={{ pt: 5 }} className='form-edit' onSubmit={handleSubmit}>
+      <form sx={{ pt: 5 }} className='form-edit' >
         <FormGroup>
           <FormControl sx={{ pt: 5 }}>
             <TextField
@@ -121,7 +128,7 @@ export default function EditTask() {
               />
             }
           />
-          <Button type="submit" size="large" variant="contained">Update Task</Button>
+          <Button type="submit" size="large" variant="contained" onClick={onSaveTaskClicked}>Update Task</Button>
         </FormGroup>
       </form>
       <Link to="/" className=''>
