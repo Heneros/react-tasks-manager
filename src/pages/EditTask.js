@@ -5,137 +5,118 @@ import { Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormHe
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useDispatch, useSelector } from 'react-redux';
-import { editTask } from '../redux/reducer';
+import { editTask, selectTaskById } from '../redux/reducer';
 
 
 export default function EditTask() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [task, setTask] = useState({});
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [completed, setСompleted] = useState(false);
+
+
+  const task = useSelector((state) => selectTaskById(state, Number(id)))
+  // console.log(task);
+
+  const [name, setName] = useState(task.name)
+  const [description, setDescription] = useState(task.description);
+  const [completed, setСompleted] = useState(task.completed);
+  const [requestStatus, setRequestStatus] = useState('idle');
 
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const { tasks } = useSelector((state) => state.tasks);
 
-  useEffect(() => {
-    //   // const tasksJSON = localStorage.getItem("tasks");
-    //   // const tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
-    //   const foundTask = tasks.find((t) => t.id === parseInt(id));
-
-    //   if (foundTask) {
-    //     setTask(foundTask);
-    //     setName(foundTask.name);
-    //     setDescription(foundTask.description);
-    //     setСompleted(foundTask.completed);
-    //   } else {
-    //     setTask({});
-    //     setName("");
-    //     setDescription("");
-    //   }
-    // }, [id]);
-
-    // const handleSubmit = (e) => {
-    //   e.preventDefault();
-
-    //   const updatedTasks = tasks.map((task) => {
-    //     if (task.id === parseInt(id)) {
-    //       return {
-    //         ...task,
-    //         name: name,
-    //         description: description,
-    //         completed: completed
-    //       }
-
-    //     }
-    //     return task;
-    //   });
-    //   localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  const onNameChanged = e => setName(e.target.value)
+  const onDescriptionChanged = e => setDescription(e.target.value)
+  // const onNameChanged = e => setName(e.target.value)
 
 
-    //   setSnackbarMessage("Task been updted");
-    //   setSnackbarOpen(true);
-  })
-  const onSaveTaskClicked = () => {
-    try {
-      const editedTask = { id: task.id, name, description, completed };
-      console.log(id);
-      // console.log('Success');
-      // // dispatch(editTask())
-      // console.log(dispatch(editTask({ id: task.id }))).unwrap();
-    } catch (error) {
-      console.log('Error EditTask' . error)
+  const canSave = [name, description].every(Boolean) && requestStatus === 'idle';
+
+  const onSaveTaskClicked = (e) => {
+    e.preventDefault();
+    if (canSave) {
+      try {
+        // dispatch();
+
+        console.log(dispatch(editTask({ id: task.id, name }))).unwrap();
+        console.log('Working!!!')
+      } catch (error) {
+        console.log('Error EditTask'.error)
+      }
     }
+
 
   }
 
   return (
-    <Box sx={{ mt: 15 }} style={{ "textAlign": "center" }}>
-      <Typography variant="h5">Edit Task</Typography>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
+    <>
+      <Box sx={{ mt: 15 }} style={{ "textAlign": "center" }}>
+        <Typography variant="h5">Edit Task</Typography>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
           onClose={() => setSnackbarOpen(false)}
-          severity="success"
         >
-          {snackbarMessage}
-        </MuiAlert>
-      </Snackbar>
-      <form sx={{ pt: 5 }} className='form-edit' >
-        <FormGroup>
-          <FormControl sx={{ pt: 5 }}>
-            <TextField
-              value={id}
-              label="ID"
-              disabled
-              followCursor
-            />
-          </FormControl>
-          <FormControl sx={{ pt: 2 }}>
-            <TextField
-              label="Name Task"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </FormControl>
-          <FormControl sx={{ pt: 2 }}>
-            <TextField
-              label="Description Task"
-              type="text"
-              required
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              multiline
-              minRows={2}
-              maxRows={5}
-            />
-          </FormControl>
-          <FormControlLabel
-            label="Is done?"
-            control={
-              <Checkbox
-                checked={completed}
-                onChange={(e) => setСompleted(e.target.checked)}
+          <MuiAlert
+            elevation={6}
+            variant="filled"
+            onClose={() => setSnackbarOpen(false)}
+            severity="success"
+          >
+            {snackbarMessage}
+          </MuiAlert>
+        </Snackbar>
+        <form sx={{ pt: 5 }} className='form-edit' >
+          <FormGroup>
+            <FormControl sx={{ pt: 5 }}>
+              <TextField
+                value={id}
+                label="ID"
+                disabled
+                followCursor
               />
-            }
-          />
-          <Button type="submit" size="large" variant="contained" onClick={onSaveTaskClicked}>Update Task</Button>
-        </FormGroup>
-      </form>
-      <Link to="/" className=''>
-        <Button variant="contained" color="success">
-          Back
-        </Button>
-      </Link>
-    </Box>
+            </FormControl>
+            <FormControl sx={{ pt: 2 }}>
+              <TextField
+                label="Name Task"
+                value={name}
+                // onChange={(e) => setName(e.target.value)}
+                onChange={onNameChanged}
+                required
+              />
+            </FormControl>
+            <FormControl sx={{ pt: 2 }}>
+              <TextField
+                label="Description Task"
+                type="text"
+                required
+                value={description}
+                // onChange={(e) => setDescription(e.target.value)}
+                onChange={onDescriptionChanged}
+                multiline
+                minRows={2}
+                maxRows={5}
+              />
+            </FormControl>
+            <FormControlLabel
+              label="Is done?"
+              control={
+                <Checkbox
+                  checked={completed}
+                  onChange={(e) => setСompleted(e.target.checked)}
+                />
+              }
+            />
+            <Button type="submit" size="large" variant="contained" onClick={onSaveTaskClicked}>Update Task</Button>
+          </FormGroup>
+        </form>
+        <Link to="/" className=''>
+          <Button variant="contained" color="success">
+            Back
+          </Button>
+        </Link>
+      </Box>
+    </>
   )
 }

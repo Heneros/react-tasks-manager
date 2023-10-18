@@ -6,7 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 
 import store from './redux/store';
-import { TasksProvider } from './contexts/TasksContext';
+// import { TasksProvider } from './contexts/TasksContext';
 import './css/Style.css';
 
 import Faq from './pages/Faq';
@@ -51,9 +51,9 @@ const router = createBrowserRouter([
 
 ReactDOM.render(
   <Provider store={store}>
-    <TasksProvider>
+
       <RouterProvider router={router} />
-    </TasksProvider>
+
   </Provider>
   ,
   document.getElementById('root')

@@ -32,7 +32,6 @@ export default function Form() {
         // console.log(newTask)
 
         dispatch(addTask(newTask));
-        // localStorage.setItem("tasks", JSON.stringify(newTask)); // Обновить localStorage
 
         nameRef.current.value = "";
         descriptionRef.current.value = "";
