@@ -6,27 +6,21 @@ import { updateTask } from "../utils/taskUtil";
 const initialState = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : { tasks: [] };
 
 
-export const editTask = createAsyncThunk("tasks/updatePost", async (updatedTask, { getState }) => {
-    // const { id } = initialState;
-    const state = getState();
+// export const editTask = createAsyncThunk("tasks/updateTask", async (initialTask) => {
+//     const { id } = initialTask;
 
-    try {
-        // const tasks = state.tasks;
-        //   const updatedTasks = state.tasks.map(task => (task.id === id ? initialState : task));
-        //   return updateTask(updatedTasks);
-        const updatedTasks = state.tasks.map((task) =>
-            task.id === updatedTask.id ? updatedTask : task
-        );
-        return updateTask(updatedTasks);
+//     try {
+//         const { tasks } = JSON.parse(localStorage.getItem('tasks'));
+//         // task => task.id === id если это true то переходит в это состояние initialTask
+//         const updatedTask = tasks.map(task => task.id === id ? initialTask : task);
+//         // console.log(updatedTask);
+//         // return updatedTask;
 
-        // updateLocalStorage(updatedTasks);
+//     } catch (err) {
+//         console.log(err);
+//     }
 
-        // return updatedTask;
-        // console.log(id);
-    } catch (err) {
-        console.log(err);
-    }
-})
+// })
 
 const reducerTasks = createSlice({
     name: "tasks",
@@ -49,7 +43,6 @@ const reducerTasks = createSlice({
         },
         searchTask: (state, action) => {
             const { searchText } = action.payload;
-
             const filteredText = state.tasks.filter(task => {
                 const nameMatch = task.name && task.name.toLowerCase().includes(searchText.toLowerCase());
                 return nameMatch;
@@ -58,31 +51,31 @@ const reducerTasks = createSlice({
             state.filterText = searchText;
         },
 
+        editTask: (state, action) => {
+            if (!action.payload.id) {
+                console.log('Update could not complete');
+                return
+            }
+            const updatedTask = action.payload;
+            const updatedTasks = state.tasks.map(task => {
+                if (task.id === updatedTask.id) {
+                    return updatedTask;
+                }
+                return task;
+            });
+            state.tasks = updatedTasks;
+            return updateTask(state);
+        },
         removeTask: (state, action) => {
-
             const taskId = action.payload;
-
             let updatedTasks = state.tasks.filter(task => {
                 return task.id !== taskId;
             });
-
             state.tasks = updatedTasks;
-            // localStorage.setItem("tasks", JSON.stringify(updatedTasks));
             return updateTask(state);
         }
     },
-    extraReducers(builder) {
-        builder.addCase(editTask.fulfilled, (state, action) => {
-            if (!action.payload || !state.tasks) {
-                console.log("Update could not complete");
-                console.log(action.payload);
-                return;
-            }
-            const { id } = action.payload;
-            const tasks = state.tasks.filter((task) => task.id !== id);
-            state.tasks = [...tasks, action.payload];
-        });
-    },
+    extraReducers(builder) { },
 });
 
 
@@ -90,7 +83,7 @@ const reducerTasks = createSlice({
 export const selectTaskById = (state, id) =>
     state.tasks.find(task => task.id === id);
 
-export const { addTask, searchTask, removeTask } = reducerTasks.actions;
+export const { addTask, searchTask, editTask, removeTask } = reducerTasks.actions;
 export const reducer = reducerTasks.reducer;
 
 

@@ -37,10 +37,7 @@ export default function EditTask() {
     e.preventDefault();
     if (canSave) {
       try {
-        // dispatch();
-
-        console.log(dispatch(editTask({ id: task.id, name }))).unwrap();
-        console.log('Working!!!')
+        dispatch(editTask({ id: task.id, name, description }));
       } catch (error) {
         console.log('Error EditTask'.error)
       }
