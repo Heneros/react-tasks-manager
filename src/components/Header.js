@@ -27,10 +27,10 @@ export default function Header() {
                 Tasks Manager
             </Typography>
             <Divider />
-            <List>
+            {/* <List>
                 <Link to={'/'} >Home</Link>
                 <Link to={'/faq'} >Faq</Link>
-            </List>
+            </List> */}
         </Box >
     );
 
@@ -38,7 +38,7 @@ export default function Header() {
         <Box sx={{ display: 'flex' }}>
             <AppBar component="nav" >
                 <Toolbar >
-                    <IconButton
+                    {/* <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         edge="start"
@@ -46,34 +46,24 @@ export default function Header() {
                         sx={{ mr: 2, display: { sm: 'none' } }}
                     >
                         <MenuIcon />
-                    </IconButton>
-                    <Typography variant='h5' component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        <Link to={`/`}>
-                            Tasks Manager
+                    </IconButton> */}
+
+                    <Typography variant='h5' className='logo-title' component="div" sx={{ flexGrow: 1, }}>
+                        <Link to={`/`} >
+                            Tasks Manager 
                         </Link>
                     </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' }, justifyContent: 'flex-end' }}>
+                    {/* <Box sx={{ display: { xs: 'none', sm: 'block' }, justifyContent: 'flex-end' }}>
                         <Link to={'/'} >Home</Link>
                         <Link to={'/faq'} >Faq</Link>
-                    </Box>
+                    </Box> */}
                 </Toolbar>
             </AppBar>
             <Box component="nav">
-                <Drawer
-                    variant='temporary'
-                    open={mobileOpen}
-                    onClose={handleDrawerToggle}
-                    ModalProps={{
-                        keepMounted: true
-                    }}
-                    sx={{
-                        display: { xs: 'block', sm: 'none' }
-                    }}
-                >  {drawer}
-                </Drawer>
-                <Typography variant='h5' component="div" >
-                    <Link to={`/`}>
-                        Tasks Manager
+
+                <Typography variant='h5' className='logo-title' component="div" sx={{ flexGrow: 1 }}>
+                    <Link to={`/`} >
+                        Tasks Manager mobile
                     </Link>
                 </Typography>
             </Box>

@@ -19,6 +19,8 @@ export default function EditTask() {
   const [name, setName] = useState(task.name)
   const [description, setDescription] = useState(task.description);
   const [completed, setСompleted] = useState(task.completed);
+
+
   const [requestStatus, setRequestStatus] = useState('idle');
 
 
@@ -28,22 +30,22 @@ export default function EditTask() {
 
   const onNameChanged = e => setName(e.target.value)
   const onDescriptionChanged = e => setDescription(e.target.value)
-  // const onNameChanged = e => setName(e.target.value)
 
 
-  const canSave = [name, description].every(Boolean) && requestStatus === 'idle';
+
+  const canSave = [name, description, completed].every(Boolean) && requestStatus === 'idle';
 
   const onSaveTaskClicked = (e) => {
     e.preventDefault();
-    if (canSave) {
-      try {
-        dispatch(editTask({ id: task.id, name, description }));
-      } catch (error) {
-        console.log('Error EditTask'.error)
-      }
+    // if (canSave) {
+    try {
+      dispatch(editTask({ id: task.id, name, description, completed }));
+      setSnackbarMessage("Task been updated");
+      setSnackbarOpen(true);
+    } catch (error) {
+      console.log('Error EditTask'.error)
     }
-
-
+    // }
   }
 
   return (
@@ -78,7 +80,6 @@ export default function EditTask() {
               <TextField
                 label="Name Task"
                 value={name}
-                // onChange={(e) => setName(e.target.value)}
                 onChange={onNameChanged}
                 required
               />
@@ -89,7 +90,6 @@ export default function EditTask() {
                 type="text"
                 required
                 value={description}
-                // onChange={(e) => setDescription(e.target.value)}
                 onChange={onDescriptionChanged}
                 multiline
                 minRows={2}
@@ -108,8 +108,8 @@ export default function EditTask() {
             <Button type="submit" size="large" variant="contained" onClick={onSaveTaskClicked}>Update Task</Button>
           </FormGroup>
         </form>
-        <Link to="/" className=''>
-          <Button variant="contained" color="success">
+        <Link to="/" className='' >
+          <Button variant="contained" color="success" sx={{ marginTop: '30px' }}>
             Back
           </Button>
         </Link>

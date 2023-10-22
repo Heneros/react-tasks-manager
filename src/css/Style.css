@@ -3,16 +3,30 @@ body {
 }
 
 .tasks {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  /* grid-gap: 50px; */
 }
 
-.item-task {
-  text-align: center;
-  display: flex;
+
+@media(max-width: 1070px) {
+  .tasks {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+
+@media(max-width: 756px) {
+  .tasks {
+    display: grid;
+    grid-template-columns: auto;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .form {
@@ -21,17 +35,15 @@ body {
 
 .item-task {
   display: flex;
-  flex-direction: column;
-}
-
-.item-btns {
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
 }
 
-/* .form-edit {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-} */
+
+.logo-title a {
+  color: #fff;
+  font-size: 27px;
+  text-decoration: none;
+  text-transform: none;
+}

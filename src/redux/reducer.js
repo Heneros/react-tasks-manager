@@ -6,22 +6,6 @@ import { updateTask } from "../utils/taskUtil";
 const initialState = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : { tasks: [] };
 
 
-// export const editTask = createAsyncThunk("tasks/updateTask", async (initialTask) => {
-//     const { id } = initialTask;
-
-//     try {
-//         const { tasks } = JSON.parse(localStorage.getItem('tasks'));
-//         // task => task.id === id если это true то переходит в это состояние initialTask
-//         const updatedTask = tasks.map(task => task.id === id ? initialTask : task);
-//         // console.log(updatedTask);
-//         // return updatedTask;
-
-//     } catch (err) {
-//         console.log(err);
-//     }
-
-// })
-
 const reducerTasks = createSlice({
     name: "tasks",
     initialState,
@@ -32,7 +16,6 @@ const reducerTasks = createSlice({
                 state.tasks = [];
             }
             const existItem = state.tasks.find((x) => x.id === item.id);
-
             if (existItem) {
                 console.log(true);
             } else {

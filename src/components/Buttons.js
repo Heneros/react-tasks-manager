@@ -15,14 +15,10 @@ export default function Buttons() {
     const dispatch = useDispatch();
     const tasks = useSelector((state) => state.tasks);
 
-
-    console.log(tasks)
+    // console.log(tasks)
 
     const [searchText, setSearchText] = useState('');
     const [filter, setFilter] = useState('all');
-
-
-    //
 
     const filteredTasks = (tasks || []).filter((task) => {
 
@@ -40,12 +36,11 @@ export default function Buttons() {
     });
 
     // console.log(filteredTasks)
-
-
     return (
         <div>
             <div className="navigation-tasks">
                 <Form />
+
                 <TextField
                     type="search"
                     variant="filled"
@@ -71,7 +66,7 @@ export default function Buttons() {
                     >Progress</Button>
                 </div>
             </div>
-            <div className="tasks" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}  >
+            <div className="tasks"  >
                 {tasks && tasks.length ? (
                     filteredTasks.map((task) => (
                         <Task
@@ -83,22 +78,7 @@ export default function Buttons() {
                     )
                     )) : (
                     <p>No tasks been added.</p>
-
                 )}
-
-                {/* {tasks && tasks.length ? (
-                    filteredTasks.map((task) => (
-                        // <Task {...task} />
-                        <Task
-                            id={task.id}
-                            name={task.name}
-                            description={task.description}
-                            completed={task.completed}
-                        />
-                    ))
-                ) : (
-                    <p>No tasks been added.</p>
-                )} */}
             </div>
         </div>
     )

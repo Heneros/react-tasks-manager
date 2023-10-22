@@ -12,20 +12,17 @@ export default function Form() {
     const descriptionRef = useRef();
     const dispatch = useDispatch();
     const [filter, setFilter] = useLocalStorage("filter", 'all');
-    const tasks = useSelector((state) => state.tasks); // Получаем задачи из Redux
-
-
 
 
     const add = () => {
-        // if (nameRef.current.value === "" || descriptionRef.current.value === "") {
-        //     alert("Empty string");
-        // } else {
+        if (nameRef.current.value === "" || descriptionRef.current.value === "") {
+            alert("Empty field");
+        } else {
         const newTask = {
             id: Date.now(),
             name: nameRef.current.value,
             description: descriptionRef.current.value,
-            // completed: false,
+            completed: false,
             all: filter === 'all' || filter === 'completed',
             progress: filter === 'all' || filter === 'progress',
         };
@@ -35,9 +32,7 @@ export default function Form() {
 
         nameRef.current.value = "";
         descriptionRef.current.value = "";
-        // }
-        // window.location.reload();
-
+        }
     };
 
     function handleSubmit(e) {
@@ -47,16 +42,15 @@ export default function Form() {
 
     return (
         <>
-            <Box sx={{ mt: 15 }}>
+            <Box sx={{ mt: 15 }} style={{ marginBottom: "45px" }}>
                 <form onSubmit={handleSubmit} className='form' >
-                    <FormControl >
-                        <TextField type="text" inputRef={nameRef} placeholder="Name of task" />
-                        <TextField type="text" inputRef={descriptionRef} placeholder="Description" />
+                    <FormControl fullWidth >
+                        <TextField type="text" fullWidth style={{ width: '100%' }} inputRef={nameRef} placeholder="Name of task" />
+                        <TextField type="text" fullWidth style={{ width: '100%' }} inputRef={descriptionRef} placeholder="Description" />
                         <Button type="submit" fullWidth variant="outlined" >
                             Add Task
                         </Button>
                     </FormControl>
-                    <span></span>
                 </form>
             </Box>
         </>

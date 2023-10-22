@@ -12,28 +12,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 
 export default function Task({ id, name, description }) {
+
     const dispatch = useDispatch();
-
-
 
 
     const removeById = (e) => {
         e.preventDefault();
-  
         if (window.confirm("Are you sure you want to delete")) {
-            // const tasksJSON = localStorage.getItem("tasks");
-            // let tasks = tasksJSON ? JSON.parse(tasksJSON) : [];
-            // tasks = tasks.filter(task => task.id !== parseInt(id));
-            // localStorage.setItem("tasks", JSON.stringify(tasks));
             dispatch(removeTask(id));
-
-            // window.location.reload();
         }
     }
 
     return (
         <Card sx={{ p: 2, m: 2, border: '1px solid grey' }} color="success" variant="outlined" className="item-task" >
-
             <IconButton
                 sx={{ display: 'flex', justifyContent: 'right' }}
                 color="error"
@@ -49,8 +40,15 @@ export default function Task({ id, name, description }) {
                     {description && description.length > 25 ? description.substring(0, 25) + `...` : description}
                 </p>
             </div>
-            <div className="item-btns">
-                <Link to={`/edit/${id}`}>
+            <Box component="div" className="item-btns" sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                flexDirection: {
+                    // xs: "column",
+                    md: "row"
+                }
+            }}>
+                <Link to={`/edit/${id}`} >
                     <Button variant="contained" startIcon={<EditIcon />} >
                         Edit
                     </Button>
@@ -62,7 +60,7 @@ export default function Task({ id, name, description }) {
                         Details
                     </Button>
                 </Link>
-            </div>
+            </Box>
         </Card >
 
 
